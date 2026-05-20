@@ -16,7 +16,7 @@ import { useAuth } from "../store/authStore";
 export async function register(newUser: NewUser): Promise<UserResponse> {
   const res = await nextServer.post<AxiosRes<UserResponse>>(
     "/auth/register",
-    newUser
+    newUser,
   );
   return res.data.data;
 }
@@ -53,11 +53,11 @@ export const createDiary = async (payload: CreateDiary): Promise<DiaryData> => {
 
 export const updateDiary = async (
   diaryId: string,
-  payload: CreateDiary
+  payload: CreateDiary,
 ): Promise<DiaryData> => {
   const res = await nextServer.patch<AxiosRes<DiaryData>>(
     `/diaries/${diaryId}`,
-    payload
+    payload,
   );
 
   return res.data.data;
@@ -87,18 +87,18 @@ export const createTask = async (payload: CreateTaskProps): Promise<Task> => {
 export const updateTaskStatusById = async (taskId: string): Promise<Task> => {
   const res = await nextServer.patch<AxiosRes<Task>>(
     `/tasks/${taskId}/status`,
-    undefined
+    undefined,
   );
   return res.data.data;
 };
 
 export const updateTaskById = async (
   taskId: string,
-  payload: UpdateTaskProps
+  payload: UpdateTaskProps,
 ): Promise<Task> => {
   const res = await nextServer.patch<AxiosRes<Task>>(
     `/tasks/${taskId}`,
-    payload
+    payload,
   );
   return res.data.data;
 };
@@ -110,7 +110,7 @@ export const getUser = async (): Promise<UserResponse> => {
 };
 
 export const updateUser = async (
-  payload: UserPayload
+  payload: UserPayload,
 ): Promise<UserResponse> => {
   const res = await nextServer.patch<AxiosRes<UserResponse>>("/users", payload);
 
@@ -124,7 +124,7 @@ export const updateUserAvatar = async (file: File): Promise<UserResponse> => {
 
   const res = await nextServer.patch<AxiosRes<UserResponse>>(
     "/users/avatar",
-    formData
+    formData,
   );
   return res.data.data;
 };
@@ -143,7 +143,7 @@ export const getWeekDynamic = async (): Promise<WeekRes> => {
 
 export const getMomState = async (week: number): Promise<MomState> => {
   const res = await nextServer.get<AxiosRes<MomState>>(
-    `/weeks/mom-state/${week}`
+    `/weeks/mom-state/${week}`,
   );
 
   return res.data.data;
@@ -151,7 +151,7 @@ export const getMomState = async (week: number): Promise<MomState> => {
 
 export const getBabyState = async (week: number): Promise<BabyState> => {
   const res = await nextServer.get<AxiosRes<BabyState>>(
-    `/weeks/baby-state/${week}`
+    `/weeks/baby-state/${week}`,
   );
 
   return res.data.data;
