@@ -5,3 +5,14 @@ export const nextServer = axios.create({
   baseURL,
   withCredentials: true,
 });
+
+nextServer.interceptors.request.use((config) => {
+  const cookies = document.cookie.split(";");
+  const accessToken = cookies
+    .find((row) => row.startsWith("accessToken="))
+    ?.split("=")[1];
+  if (accessToken) {
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+  }
+  return config;
+});
