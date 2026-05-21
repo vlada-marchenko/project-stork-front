@@ -7,6 +7,7 @@ export const nextServer = axios.create({
 });
 
 nextServer.interceptors.request.use((config) => {
+  if (typeof document === "undefined") return config;
   const cookies = document.cookie.split(";");
   const accessToken = cookies
     .find((row) => row.startsWith("accessToken="))
