@@ -11,10 +11,10 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isPrivateRoute = privateRoutes.some((route) =>
-    pathname.startsWith(route)
+    pathname.startsWith(route),
   );
   const isPublicRoute = publicRoutes.some((route) =>
-    pathname.startsWith(route)
+    pathname.startsWith(route),
   );
 
   if (isPublicRoute) {
@@ -28,9 +28,9 @@ export async function middleware(request: NextRequest) {
       }
 
       try {
-        const refreshUrl = new URL("/auth/refresh", request.url);
-        
-        const apiRes = await fetch(refreshUrl.toString(), {
+        const refreshUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/refresh`;
+        const apiRes = await fetch(refreshUrl, {
+          method: "POST",
           headers: { Cookie: cookieStore.toString() },
         });
 
