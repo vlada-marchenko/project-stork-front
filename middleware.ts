@@ -9,6 +9,8 @@ export async function middleware(request: NextRequest) {
   const cookieHeader = `accessToken=${accessToken ?? ""}; refreshToken=${
     refreshToken ?? ""
   }`;
+  console.log("access", accessToken);
+  console.log("refresh", refreshToken);
   const { pathname } = request.nextUrl;
 
   const isPrivateRoute = privateRoutes.some((route) =>
