@@ -64,7 +64,7 @@ export default function LoginForm() {
     {
       setSubmitting,
       resetForm,
-    }: { setSubmitting: (v: boolean) => void; resetForm: () => void }
+    }: { setSubmitting: (v: boolean) => void; resetForm: () => void },
   ) => {
     setServerError("");
     try {
@@ -72,6 +72,8 @@ export default function LoginForm() {
       if (!res) {
         throw new Error("Неочікувана відповідь сервера");
       }
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       const user: UserResponse = await getUser();
       setUser(user);
@@ -98,7 +100,7 @@ export default function LoginForm() {
         }
       } else if (error.request) {
         toast.error(
-          "Сервер не відповідає. Перевірте підключення до інтернету."
+          "Сервер не відповідає. Перевірте підключення до інтернету.",
         );
       } else {
         toast.error("Помилка при відправці запиту.");
@@ -110,11 +112,10 @@ export default function LoginForm() {
 
   return (
     <div className={css.mainContent}>
-      
       <div className={css.wrapper}>
-     <div className={css.logo}>
-        <NavBarLogo />
-      </div>
+        <div className={css.logo}>
+          <NavBarLogo />
+        </div>
         <h1 className={css.title}>Вхід</h1>
 
         <Formik<LoginFormValues>
