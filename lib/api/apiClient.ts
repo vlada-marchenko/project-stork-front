@@ -23,7 +23,9 @@ export async function register(newUser: NewUser): Promise<UserResponse> {
 
 export const login = async (payload: LoginPayload) => {
   const res = await nextServer.post("/auth/login", payload);
-
+  if (res.data?.data?.accessToken) {
+    useAuth.getState().setAccessToken(res.data.data.accessToken);
+  }
   if (res.data.user) {
     useAuth.getState().setUser(res.data.user);
   }
@@ -33,7 +35,9 @@ export const login = async (payload: LoginPayload) => {
 
 export const refresh = async () => {
   const res = await nextServer.post("/auth/refresh");
-
+  if (res.data?.data?.accessToken) {
+    useAuth.getState().setAccessToken(res.data.data.accessToken);
+  }
   return res.data;
 };
 
