@@ -8,6 +8,8 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
+  console.log("accessToken:", accessToken);
+  console.log("refreshToken:", refreshToken);
   const { pathname } = request.nextUrl;
 
   const isPrivateRoute = privateRoutes.some((route) =>
