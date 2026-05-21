@@ -35,9 +35,6 @@ export const login = async (payload: LoginPayload) => {
 
 export const refresh = async () => {
   const res = await nextServer.post("/auth/refresh");
-  if (res.data?.data?.accessToken) {
-    useAuth.getState().setAccessToken(res.data.data.accessToken);
-  }
   return res.data;
 };
 
