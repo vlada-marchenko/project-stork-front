@@ -26,15 +26,14 @@ export const login = async (payload: LoginPayload) => {
   if (res.data?.data?.accessToken) {
     useAuth.getState().setAccessToken(res.data.data.accessToken);
   }
-  if (res.data.user) {
-    useAuth.getState().setUser(res.data.user);
-  }
-
   return res.data;
 };
 
 export const refresh = async () => {
   const res = await nextServer.post("/auth/refresh");
+  if (res.data?.data?.accessToken) {
+    useAuth.getState().setAccessToken(res.data.data.accessToken);
+  }
   return res.data;
 };
 
