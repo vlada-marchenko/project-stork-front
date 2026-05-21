@@ -18,15 +18,20 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const isAuthenticated = await refresh();
-      if (isAuthenticated) {
-        const res = await getUser();
-        if (res) setUser(res);
-      } else {
-        clearIsAuthenticated();
-        toast.error("Будь ласка зареєструйтесь!");
-      }
-      setIsLoading(false);
+            try {
+              const isAuthenticated = await refresh();
+              if (isAuthenticated) {
+                const res = await getUser();
+                if (res) setUser(res);
+              } else {
+                clearIsAuthenticated();
+                toast.error("Будь ласка зареєструйтесь!");
+              }
+            } catch {
+              clearIsAuthenticated();
+            } finally {
+              setIsLoading(false);
+            }
     };
     fetchUser();
   }, [setUser, clearIsAuthenticated]);
