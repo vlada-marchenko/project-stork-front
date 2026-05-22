@@ -73,6 +73,7 @@
 
   .empty {
     align-self: center;
-    margin: 20px 0;
+    margin: 30px 0;
+    margin-left: 32px;
   }
 }
