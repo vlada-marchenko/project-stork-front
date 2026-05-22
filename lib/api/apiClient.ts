@@ -42,8 +42,8 @@ export async function logout(): Promise<void> {
 }
 
 export const getDiaries = async (): Promise<DiaryData[]> => {
-  const res = await nextServer.get<DiaryData[]>("/diaries");
-  return res.data;
+  const res = await nextServer.get<AxiosRes<DiaryData[]>>("/diaries");
+  return res.data.data;
 };
 
 export const createDiary = async (payload: CreateDiary): Promise<DiaryData> => {
@@ -68,8 +68,8 @@ export const deleteDiary = async (diaryId: string) => {
 };
 
 export const getDiaryById = async (diaryId: string): Promise<DiaryData> => {
-  const res = await nextServer.get<DiaryData>(`/diaries/${diaryId}`);
-  return res.data;
+  const res = await nextServer.get<AxiosRes<DiaryData>>(`/diaries/${diaryId}`);
+  return res.data.data;
 };
 
 export const getTasks = async (): Promise<Task[]> => {
