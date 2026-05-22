@@ -108,13 +108,13 @@ export default function DiaryPageClient() {
                       queryClient.setQueryData<DiaryData | undefined>(
                         ["diary", updated._id],
                         (old) =>
-                          ({ ...(old ?? updated), ...updated } as DiaryData)
+                          ({ ...(old ?? updated), ...updated } as DiaryData),
                       );
                     }
                   }}
                 />
               ) : (
-                <div className={styles.placeholder}></div>
+                <p className={styles.empty}>Не створено жодного запису</p>
               )}
             </div>
           </div>

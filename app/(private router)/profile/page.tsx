@@ -1,8 +1,5 @@
-import css from "./page.module.css";
 import { Metadata } from "next";
-import ProfileAvatar from "@/components/ProfileAvatar/ProfileAvatar";
-import ProfileEditForm from "@/components/ProfileEditForm/ProfileEditForm";
-import { getUserServer } from "@/lib/api/apiServer";
+import ProfileClient from "./Profile.client";
 
 export const metadata: Metadata = {
   title: "Ваш профіль — Лелека",
@@ -10,7 +7,7 @@ export const metadata: Metadata = {
     "Керуйте своїм профілем, налаштуваннями та особистими даними на шляху до материнства.",
   openGraph: {
     title: "Ваш профіль — Лелека",
-    url: 'https://project-stork-front.vercel.app',
+    url: "https://project-stork-front.vercel.app",
     description:
       "Налаштовуйте профіль і зберігайте важливу інформацію для своєї подорожі до материнства.",
     siteName: "Лелека",
@@ -31,18 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
-const Profile = async () => {
-  const res = await getUserServer();
-  const user = res ?? null;
-
-  if (!user) return;
-
-  return (
-    <div className={css.profileCard}>
-      <ProfileAvatar user={user} />
-      <ProfileEditForm user={user} />
-    </div>
-  );
+const Profile = () => {
+  return <ProfileClient />;
 };
 
 export default Profile;
