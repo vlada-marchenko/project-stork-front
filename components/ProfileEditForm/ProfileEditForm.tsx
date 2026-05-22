@@ -6,7 +6,7 @@ import React, { useId } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format, isValid, parse } from "date-fns";
-import { updateUser } from "@/lib/api/apiClient";
+import { getWeekDynamic, updateUser } from "@/lib/api/apiClient";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 import css from "./ProfileEditForm.module.css";
@@ -22,7 +22,7 @@ const ProfileSchema = Yup.object().shape({
   email: Yup.string().email("Невірна пошта"),
   gender: Yup.string().oneOf(
     ["Хлопчик", "Дівчинка", "Ще не знаю"],
-    "Невірна стать!"
+    "Невірна стать!",
   ),
   dueDate: Yup.date().min(new Date(), "Оберіть правильну дату!"),
 });
@@ -62,8 +62,8 @@ const ProfileEditForm = ({ user }: EditFormProps) => {
     setFieldValue: (
       field: string,
       value: string,
-      shouldValidate?: boolean
-    ) => void
+      shouldValidate?: boolean,
+    ) => void,
   ): void => {
     if (date) {
       setFieldValue("dueDate", format(date, "yyyy.MM.dd"));
@@ -89,6 +89,10 @@ const ProfileEditForm = ({ user }: EditFormProps) => {
       if (res) {
         toast.success("Дані оновлено успішно!");
         setUser(res);
+        const weekRes = await getWeekDynamic();
+        if (weekRes?.currentWeek) {
+          useAuth.getState().setCurrentWeek(weekRes.currentWeek);
+        }
         router.refresh();
       }
     } catch {
@@ -98,7 +102,7 @@ const ProfileEditForm = ({ user }: EditFormProps) => {
 
   const handleCancel = (
     e: React.MouseEvent<HTMLButtonElement>,
-    reset: () => void
+    reset: () => void,
   ) => {
     e.currentTarget.blur();
     reset();
