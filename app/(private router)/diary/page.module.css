@@ -70,4 +70,9 @@
   .wrapper {
     padding-left: 32px;
   }
+
+  .empty {
+    align-self: center;
+    margin: 20px 0;
+  }
 }
