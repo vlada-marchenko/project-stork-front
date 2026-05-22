@@ -12,7 +12,7 @@ import { useAuth } from "@/lib/store/authStore";
 import { WeekRes } from "@/types/babyState";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import { useEmotion } from "@/lib/store/emotionsStore";
-import { getEmotions } from "@/lib/api/apiClient";
+import { getEmotions, getWeekDynamic } from "@/lib/api/apiClient";
 type Props = {
   weekInfo: WeekRes;
 };
@@ -29,6 +29,19 @@ const DashBoardClient = ({ weekInfo }: Props) => {
 
     loadEmotions();
   }, [setEmotions]);
+
+  const isAuthenticated = useAuth((st) => st.isAuthenticated);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const fetchDynamicWeek = async () => {
+      try {
+        const res = await getWeekDynamic();
+        if (res?.currentWeek) setCurrentWeek(res.currentWeek);
+      } catch {}
+    };
+    fetchDynamicWeek();
+  }, [isAuthenticated, setCurrentWeek]);
 
   useEffect(() => {
     if (weekInfo?.currentWeek) {
